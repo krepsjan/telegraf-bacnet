@@ -15,7 +15,8 @@ class ObjectConfig:
     cov: bool = False
     cov_lifetime: int | None = None
     properties: tuple[str, ...] = field(default_factory=tuple)
-
+    sensorType: str | None = None
+    
     def __str__(self) -> str:
         return f"<Object {self.object_identifier}>"
 
@@ -31,7 +32,7 @@ class DeviceConfig:
     read_multiple: bool = True
     read_interval: int | None = None
     objects: tuple[ObjectConfig, ...] = field(default_factory=tuple)
-
+    
     def __str__(self) -> str:
         return f"<Device {self.device_identifier}[{self.device_name}]" \
             f"@{self.address}>"

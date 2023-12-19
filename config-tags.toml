@@ -1,0 +1,95 @@
+## Show debug output on stderr
+##: bool
+debug = false
+
+
+# ====================================== #
+# Collecting BACnet device configuration #
+# ====================================== #
+
+# See https://bacpypes.readthedocs.io/en/latest/gettingstarted/gettingstarted001.html#configuring-the-workstation
+# for more information about device options
+
+## Unique device name
+##: str
+device_name = "TelegrafInput"
+## Unique device identifier
+##: int (0 - 4194303)
+#device_identifier = 4194303
+## Address of the device including network mask
+##: str
+#address = "10.32.6.193/23"
+address = "10.5.0.3/16"
+## Number of the BACnet network this device is on
+##: int (1 - 65534)
+# network number 0 znamena podle standardu, ze cislo neni zname, nebo se neda urcit. 
+network_number = 0
+## Maximum message size on the network
+##: int (> 50)
+#max_apdu_length_accepted = 1024
+## Allow sefgmentation of larger messages
+##: str
+#segmentation_supported = "segmentedBoth"
+## How this device should identify
+##: int (>= 0)
+#vendor_identifier = 555
+
+
+# ========================= #
+# Default reading intervals #
+# ========================= #
+
+## Default reading interval in seconds
+##: int (>= 0; 0 = read only once)
+# dam zatim 2,5m
+read_interval = 10
+## Default CoV Request lifetime in seconds
+##: int (> 0)
+cov_lifetime = 300
+
+# ============== #
+# Manual devices #
+# ============== #           
+
+
+# Tady je nejaka chyba, je to v intervalu 10 s
+# 2023-12-01 10:17:57,145 [ERROR] telegrafbacnet.app: Error while ReadingPropertyMultiple <bacpypes.basetypes.ErrorType object at 0x7f5838c01ed0>
+
+# room A-192a (A.1.01)
+[[device]]
+   address = "10.32.7.25"
+   device_name = "E09_25"
+   read_multiple = true
+   # Temperature
+   [[device.objects]]
+       sensorType = "EnergyEfficiency"	
+       object_identifier = "multiStateValue:23"
+       cov = false
+       properties = ['presentValue']
+
+# room A-702 (A.7.07)
+[[device]]
+   address = "10.32.7.134"
+   device_name = "E09_134"
+   read_multiple = true
+   # Temperature
+   [[device.objects]]
+       sensorType = "Temperature"	
+       object_identifier = "analogValue:55"
+       cov = false
+       properties = ['presentValue']
+
+   # presenceDetected
+   [[device.objects]]
+       sensorType = "PresenceDetected"	
+       object_identifier = "binaryValue:6"
+       cov = false
+       properties = ['presentValue']        
+      
+   # airQuality
+   [[device.objects]]
+       sensorType = "AirQuality"	   
+       object_identifier = "analogValue:54"
+       cov = false
+       properties = ['presentValue']
+       

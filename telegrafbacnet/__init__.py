@@ -42,7 +42,8 @@ def main() -> None:
     _logger.addHandler(log_handler)
     _logger.setLevel(logging.DEBUG if config.debug else logging.INFO)
 
-    app = TelegrafApplication(config)
+    app = TelegrafApplication(config) # Tady se zavola konstruktor.
     app.register_devices(*config.device)
 
-    run()
+    run() # zajimavy je, ze je to bez parametru. Nejak to zrejme
+          # zpracuje ty objekty app vyse. Ale jak to o nich vi? 
